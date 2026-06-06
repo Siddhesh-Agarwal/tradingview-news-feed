@@ -1,5 +1,6 @@
 from enum import StrEnum
 
+import httpx
 from pydantic import BaseModel, Field, HttpUrl
 
 
@@ -114,9 +115,17 @@ class TradingViewNewsFeed:
         self.url += "&user_prostatus=non_pro"
         print(self.url)
 
-    def fetch() -> Feed: ...
+    def fetch(self) -> Feed:
+        with httpx.Client() as client:
+            response = client.get(self.url)
+            response.raise_for_status()
+            return Feed.model_validate(response.json())
 
-    async def fetch_async() -> Feed: ...
+    async def fetch_async(self) -> Feed:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(self.url)
+            response.raise_for_status()
+            return Feed.model_validate(response.json())
 
 
 if __name__ == "__main__":
