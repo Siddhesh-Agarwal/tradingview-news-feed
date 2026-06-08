@@ -1,4 +1,5 @@
 from enum import StrEnum
+from urllib.parse import quote
 
 import httpx
 from pydantic import BaseModel, Field, HttpUrl
@@ -17,27 +18,27 @@ class Market(StrEnum):
 
 
 class MarketSector(StrEnum):
-    COMMERCIAL_SERVICES = ""
-    COMMUNICATIONS = ""
-    CONSUMER_DURABLES = ""
-    CONSUMER_NON_DURABLES = ""
-    CONSUMER_SERVICES = ""
-    DISTRIBUTION_SERVICES = ""
-    ELECTRONIC_TECH = ""
-    ENERGY_MINERALS = ""
-    FINANCE = ""
-    GOVERNMENT = ""
-    HEALTH_SERVICES = ""
-    HEALTH_TECH = ""
-    INDUSTRIAL_SERVICES = ""
-    MISCELLANEOUS = ""
-    NON_ENERGY_MINERALS = ""
-    PROCESS_INDUSTRIES = ""
-    PRODUCER_MANUFACTURING = ""
-    RETAIL_TRADE = ""
-    TECH_SERVICES = ""
-    TRANSPORTATION = ""
-    UTILITIES = ""
+    COMMERCIAL_SERVICES = "Commercial Services"
+    COMMUNICATIONS = "Communications"
+    CONSUMER_DURABLES = "Consumer Durables"
+    CONSUMER_NON_DURABLES = "Consumer Non-Durables"
+    CONSUMER_SERVICES = "Consumer Services"
+    DISTRIBUTION_SERVICES = "Distribution Services"
+    ELECTRONIC_TECH = "Electronic Technology"
+    ENERGY_MINERALS = "Energy Minerals"
+    FINANCE = "Finance"
+    GOVERNMENT = "Government"
+    HEALTH_SERVICES = "Health Services"
+    HEALTH_TECH = "Health Technology"
+    INDUSTRIAL_SERVICES = "Industrial Services"
+    MISCELLANEOUS = "Miscellaneous"
+    NON_ENERGY_MINERALS = "Non-Energy Minerals"
+    PROCESS_INDUSTRIES = "Process Industries"
+    PRODUCER_MANUFACTURING = "Producer Manufacturing"
+    RETAIL_TRADE = "Retail Trade"
+    TECH_SERVICES = "Technology Services"
+    TRANSPORTATION = "Transportation"
+    UTILITIES = "Utilities"
 
 
 class FeedFormat(StrEnum):
@@ -100,18 +101,21 @@ class TradingViewNewsFeed:
         market_country: list[str] | None = None,
         sector: MarketSector | None = None,
     ):
-        self.url = f"{self._base_url}?filter=lang%3Aen"
+        self.url = self._base_url
+        self.url += quote("?filter=lang:en")
         if economic_category is not None:
-            self.url += "&filter=economic_category%3A" + economic_category.value
+            self.url += quote("&filter=economic_category:" + economic_category.value)
         if priority is not None:
-            self.url += "&filter=priority%3A" + priority.value
+            self.url += quote("&filter=priority:" + priority.value)
         if symbol is not None:
             # symbol is of the format exchange:ticker
-            self.url += "&filter=symbol%3A" + symbol
-        if market:
-            self.url += "&filter=market%3A" + market.value
+            self.url += quote("&filter=symbol:" + symbol)
+        if market is not None:
+            self.url += quote("&filter=market:" + market.value)
         if market_country:
-            self.url += "&filter=market_country%3A" + ",".join(market_country)
+            self.url += quote("&filter=market_country:" + ",".join(market_country))
+        if sector is not None:
+            self.url += quote("&filter=sector:" + sector.value)
         self.url += "&client=screener"
         self.url += "&streaming=false"
         self.url += "&user_prostatus=non_pro"
