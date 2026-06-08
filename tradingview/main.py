@@ -93,21 +93,21 @@ class TradingViewNewsFeed:
     def __init__(
         self,
         *,
-        economics: Economics | None = None,
-        format: FeedFormat | None = None,
-        instrument: str | None = None,
+        economic_category: Economics | None = None,
+        priority: FeedFormat | None = None,
+        symbol: str | None = None,
         market: Market | None = None,
         market_country: list[str] | None = None,
         sector: MarketSector | None = None,
     ):
         self.url = f"{self._base_url}?filter=lang%3Aen"
-        if economics is not None:
-            self.url += "&filter=economic_category%3A" + economics.value
-        if format is not None:
-            self.url += "&filter=priority%3A" + format.value
-        if instrument is not None:
-            # instrument is of the format exchange:ticker
-            self.url += "&filter=symbol%3A" + instrument
+        if economic_category is not None:
+            self.url += "&filter=economic_category%3A" + economic_category.value
+        if priority is not None:
+            self.url += "&filter=priority%3A" + priority.value
+        if symbol is not None:
+            # symbol is of the format exchange:ticker
+            self.url += "&filter=symbol%3A" + symbol
         if market:
             self.url += "&filter=market%3A" + market.value
         if market_country:
