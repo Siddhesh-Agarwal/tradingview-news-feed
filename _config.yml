@@ -1,0 +1,3 @@
+theme: minima
+title: TradingView News Feed SDK
+description: Python client for TradingView's news feed API
