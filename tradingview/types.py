@@ -1,3 +1,4 @@
+from typing import Literal
 from enum import StrEnum
 
 from pydantic import BaseModel, Field, HttpUrl, field_validator
@@ -79,6 +80,7 @@ class FeedItem(BaseModel):
     published: int
     urgency: int
     link: HttpUrl | None = None
+    permission: Literal["headline", "provider"] = "provider"
     storyPath: HttpUrl
     relatedSymbols: list[FeedItemRelatedSymbol] = Field(default_factory=list)
     provider: FeedItemProvider

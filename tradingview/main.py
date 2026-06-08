@@ -42,10 +42,10 @@ class TradingViewNewsFeed:
         with httpx.Client() as client:
             response = client.get(self.url)
             response.raise_for_status()
-            return Feed.model_validate_json(response.text)
+            return Feed.model_validate_json(response.text, strict=True)
 
     async def fetch_async(self) -> Feed:
         async with httpx.AsyncClient() as client:
             response = await client.get(self.url)
             response.raise_for_status()
-            return Feed.model_validate_json(response.text)
+            return Feed.model_validate_json(response.text, strict=True)
