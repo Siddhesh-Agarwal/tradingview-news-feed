@@ -62,7 +62,9 @@ class Economics(StrEnum):
 
 class FeedItemRelatedSymbol(BaseModel):
     symbol: str
-    logoid: str
+    logoid: str | None = None
+    currency_logoid: str | None = Field(alias="currency-logoid", default=None)
+    base_currency_logoid: str | None = Field(alias="base-currency-logoid", default=None)
 
 
 class FeedItemProvider(BaseModel):
