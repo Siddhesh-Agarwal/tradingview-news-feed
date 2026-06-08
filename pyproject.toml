@@ -1,7 +1,7 @@
 [project]
 name = "tradingview-news-feed"
 version = "0.1.0"
-description = "Add your description here"
+description = "Python client for TradingView's news feed API"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
