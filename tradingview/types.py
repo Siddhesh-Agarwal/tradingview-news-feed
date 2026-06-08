@@ -80,7 +80,7 @@ class FeedItem(BaseModel):
     published: int
     urgency: int
     link: HttpUrl | None = None
-    permission: Literal["headline", "provider"] = "provider"
+    permission: Literal["headline", "provider", "preview"] = "provider"
     storyPath: HttpUrl
     relatedSymbols: list[FeedItemRelatedSymbol] = Field(default_factory=list)
     provider: FeedItemProvider
