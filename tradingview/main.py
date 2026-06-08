@@ -48,17 +48,17 @@ class FeedFormat(StrEnum):
 
 
 class Economics(StrEnum):
-    GDP = ""
-    LABOR = ""
-    PRICES = ""
-    HEALTH = ""
-    MONEY = ""
-    TRADE = ""
-    GOVERNMENT = ""
-    BUSINESS = ""
-    CONSUMER = ""
-    HOUSING = ""
-    TAXES = ""
+    GDP = "gdp"
+    LABOR = "labor"
+    PRICES = "prices"
+    HEALTH = "health"
+    MONEY = "money"
+    TRADE = "trade"
+    GOVERNMENT = "government"
+    BUSINESS = "business"
+    CONSUMER = "consumer"
+    HOUSING = "housing"
+    TAXES = "taxes"
 
 
 class FeedItemRelatedSymbol(BaseModel):
@@ -101,6 +101,8 @@ class TradingViewNewsFeed:
         sector: MarketSector | None = None,
     ):
         self.url = f"{self._base_url}?filter=lang%3Aen"
+        if economics is not None:
+            self.url += "&filter=economic_category%3A" + economics.value
         if format is not None:
             self.url += "&filter=priority%3A" + format.value
         if instrument is not None:
@@ -126,7 +128,3 @@ class TradingViewNewsFeed:
             response = await client.get(self.url)
             response.raise_for_status()
             return Feed.model_validate(response.json())
-
-
-if __name__ == "__main__":
-    client = TradingViewNewsFeed(market=Market.GOVERNMENT_BONDS, instrument="NSE:TCS")
