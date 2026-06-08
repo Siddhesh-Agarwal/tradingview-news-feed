@@ -1,9 +1,10 @@
-# tradingview-news-feed API Reference
+# API Reference
 
 Python client for TradingView's news feed API. Wraps the
 `https://news-mediator.tradingview.com/news-flow/v2/news` endpoint.
 
-Requires Python 3.14+.
+> [!NOTE]
+> Requires Python 3.14+.
 
 ## Installation
 
