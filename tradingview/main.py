@@ -19,20 +19,20 @@ class TradingViewNewsFeed:
         sector: MarketSector | None = None,
     ):
         self.url = self._base_url
-        self.url += quote("?filter=lang:en")
+        self.url += "?filter=lang%3Aen"
         if economic_category is not None:
-            self.url += quote("&filter=economic_category:" + economic_category.value)
+            self.url += "&filter=economic_category%3A" + economic_category.value
+        if market is not None:
+            self.url += "&filter=market%3A" + market.value
         if priority is not None:
-            self.url += quote("&filter=priority:" + priority.value)
+            self.url += "&filter=priority%3A" + priority.value
         if symbol is not None:
             # symbol is of the format exchange:ticker
-            self.url += quote("&filter=symbol:" + symbol)
-        if market is not None:
-            self.url += quote("&filter=market:" + market.value)
-        if market_country:
-            self.url += quote("&filter=market_country:" + ",".join(market_country))
+            self.url += "&filter=symbol%3A" + quote(symbol)
+        if market_country is not None:
+            self.url += "&filter=market_country%3A" + ",".join(market_country)
         if sector is not None:
-            self.url += quote("&filter=sector:" + sector.value)
+            self.url += "&filter=sector%3A" + quote(sector.value)
         self.url += "&client=screener"
         self.url += "&streaming=false"
         self.url += "&user_prostatus=non_pro"
