@@ -1,6 +1,6 @@
 from enum import StrEnum
 
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 
 class Market(StrEnum):
@@ -41,7 +41,7 @@ class MarketSector(StrEnum):
 
 class FeedFormat(StrEnum):
     FLASH = "flash"
-    INPORTANT = "important"
+    IMPORTANT = "important"
     TOP_STORIES = "top_stories"
     KEY_FACTS = "key_facts"
 
@@ -79,9 +79,16 @@ class FeedItem(BaseModel):
     published: int
     urgency: int
     link: HttpUrl | None = None
-    storyPath: str
+    storyPath: HttpUrl
     relatedSymbols: list[FeedItemRelatedSymbol] = Field(default_factory=list)
     provider: FeedItemProvider
+
+    @field_validator("storyPath", mode="before")
+    @classmethod
+    def make_full_url(cls, v: str | None) -> HttpUrl | None:
+        if v is None:
+            return None
+        return HttpUrl(url=f"https://www.tradingview.com{v}")
 
 
 class Feed(BaseModel):
