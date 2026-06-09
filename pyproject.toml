@@ -2,9 +2,92 @@
 name = "tradingview-news-feed"
 version = "0.1.0"
 description = "Python client for TradingView's news feed API"
+license = "UNLICENSE"
 readme = "README.md"
 requires-python = ">=3.14"
+authors = [
+    { name = "Siddhesh Agarwal", email = "siddhesh.agarwal@gmail.com" },
+]
 dependencies = [
     "httpx>=0.28.1",
     "pydantic>=2.13.4",
 ]
+keywords = ["tradingview", "trading", "view", "news"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Framework :: Pydantic",
+    "Framework :: Pydantic :: 2",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Typing :: Typed",
+]
+
+[project.urls]
+homepage = "https://github.com/Siddhesh-Agarwal/tradingview-news-feed"
+repository = "https://github.com/Siddhesh-Agarwal/tradingview-news-feed"
+documentation = "https://siddhesh-agarwal.github.io/tradingview-news-feed/"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.13",
+    "ty>=0.0.37",
+]
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+line-length = 88
+indent-width = 4
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "TC",
+    "I",
+    "N",
+    "PERF",
+    "E",
+    "W",
+    "F",
+    "PL",
+    "UP",
+    "RUF",
+]
+ignore = ["PLR0913"]
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"

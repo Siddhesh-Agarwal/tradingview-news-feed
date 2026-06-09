@@ -2,4 +2,4 @@
 
 Python client for TradingView's news feed API.
 
-See the [API reference](docs/api-reference.md) for usage documentation.
+See the [API reference](https://siddhesh-agarwal.github.io/tradingview-news-feed/) for usage documentation.

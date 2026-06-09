@@ -1,5 +1,5 @@
-from typing import Literal
 from enum import StrEnum
+from typing import Literal
 
 from pydantic import BaseModel, Field, HttpUrl, field_validator
 
@@ -81,8 +81,10 @@ class FeedItem(BaseModel):
     urgency: int
     link: HttpUrl | None = None
     permission: Literal["headline", "provider", "preview"] = "provider"
-    storyPath: HttpUrl
-    relatedSymbols: list[FeedItemRelatedSymbol] = Field(default_factory=list)
+    story_path: HttpUrl = Field(alias="storyPath")
+    related_symbols: list[FeedItemRelatedSymbol] = Field(
+        default_factory=list, alias="relatedSymbols"
+    )
     provider: FeedItemProvider
 
     @field_validator("storyPath", mode="before")
