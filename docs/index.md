@@ -37,14 +37,14 @@ for item in result.items:
 
 Constructor parameters (all keyword-only):
 
-|      Parameter      | Type                   | Default | Description                                                   |
-| :-----------------: | ---------------------- | :-----: | ------------------------------------------------------------- |
-| `economic_category` | `Economics \| None`    | `None`  | Filter by economic category                                   |
-|     `priority`      | `FeedFormat \| None`   | `None`  | Filter by priority/format                                     |
-|      `symbol`       | `str \| None`          | `None`  | Filter by symbol in `EXCHANGE:TICKER` format (e.g. `NSE:TCS`) |
-|      `market`       | `Market \| None`       | `None`  | Filter by market type                                         |
-|  `market_country`   | `list[str] \| None`    | `None`  | Filter by market country codes                                |
-|      `sector`       | `MarketSector \| None` | `None`  | Filter by market sector                                       |
+|       Parameter       | Type                      | Default | Description                                                   |
+| :------------------: | ------------------------- | :-----: | ------------------------------------------------------------- |
+| `economic_categories` | `list[Economics] | None`  | `None`  | Filter by economic categories (comma-joined)                  |
+|    `priorities`      | `list[FeedFormat] | None`  | `None`  | Filter by priority/format (comma-joined)                      |
+|      `symbol`        | `str | None`              | `None`  | Filter by symbol in `EXCHANGE:TICKER` format (e.g. `NSE:TCS`) |
+|      `markets`       | `list[Market] | None`     | `None`  | Filter by market types (comma-joined)                         |
+|  `market_countries`  | `list[str] | None`        | `None`  | Filter by market country codes (comma-joined)                 |
+|      `sectors`       | `list[MarketSector] | None`| `None`  | Filter by market sectors (comma-joined)                       |
 
 The client applies the following default filters:
 
@@ -60,7 +60,7 @@ The client applies the following default filters:
 Synchronous request. Returns a `Feed` instance. Raises `httpx.HTTPError` on transport or HTTP errors.
 
 ```python
-feed = TradingViewNewsFeed(market=Market.CRYPTO)
+feed = TradingViewNewsFeed(markets=[Market.CRYPTO])
 result = feed.fetch()
 ```
 
@@ -75,7 +75,7 @@ from tradingview import TradingViewNewsFeed
 
 
 async def main():
-    feed = TradingViewNewsFeed(market=Market.CRYPTO)
+    feed = TradingViewNewsFeed(markets=[Market.CRYPTO])
     result = await feed.fetch_async()
     for item in result.items:
         print(item.title)
@@ -91,23 +91,24 @@ asyncio.run(main())
 Top-level response model.
 
 | Field | Type | Description |
-| :-----: | :--------------; | ------------------ |
+| :-----: | :--------------: | ------------------ |
 | `items` | `list[FeedItem]` | List of news items |
 
 ### `FeedItem`
 
 A single news article.
 
-|      Field       |             Type              | Description                   |
-| :--------------: | :---------------------------: | ----------------------------- |
-|       `id`       |             `str`             | Unique identifier             |
-|     `title`      |             `str`             | Article headline              |
-|   `published`    |             `int`             | Unix timestamp of publication |
-|    `urgency`     |             `int`             | Urgency level                 |
-|      `link`      |       `HttpUrl \| None`       | Link to full article          |
-|   `storyPath`    |             `str`             | Story path identifier         |
-| `relatedSymbols` | `list[FeedItemRelatedSymbol]` | Related ticker symbols        |
-|    `provider`    |      `FeedItemProvider`       | Source of the article         |
+|      Field       |             Type              | Description                                    |
+| :--------------: | :---------------------------: | ---------------------------------------------- |
+|       `id`       |             `str`             | Unique identifier                              |
+|     `title`      |             `str`             | Article headline                               |
+|   `published`    |             `int`             | Unix timestamp of publication                  |
+|    `urgency`     |             `int`             | Urgency level                                  |
+|      `link`      |       `HttpUrl | None`        | Link to full article                           |
+|   `permission`   |   `Literal["headline", "provider", "preview"]` | Access permission level        |
+|   `storyPath`    |           `HttpUrl`           | Full URL to the story on TradingView           |
+| `relatedSymbols` | `list[FeedItemRelatedSymbol]` | Related ticker symbols                         |
+|    `provider`    |      `FeedItemProvider`       | Source of the article                          |
 
 ### `FeedItemProvider`
 
@@ -119,12 +120,12 @@ A single news article.
 
 ### `FeedItemRelatedSymbol`
 
-|         Field          | Type          | Description                                                  |
-| :--------------------: | ------------- | ------------------------------------------------------------ |
-|        `symbol`        | `str`         | Ticker symbol                                                |
-|        `logoid`        | `str \| None` | Logo identifier                                              |
-|   `currency_logoid`    | `str \| None` | Currency logo identifier (alias `currency-logoid`)           |
-| `base_currency_logoid` | `str \| None` | Base currency logo identifier (alias `base-currency-logoid`) |
+|         Field          | Type         | Description                                                  |
+| :--------------------: | ------------ | ------------------------------------------------------------ |
+|        `symbol`        | `str`        | Ticker symbol                                                |
+|        `logoid`        | `str | None` | Logo identifier                                              |
+|   `currency_logoid`    | `str | None` | Currency logo identifier (alias `currency-logoid`)           |
+| `base_currency_logoid` | `str | None` | Base currency logo identifier (alias `base-currency-logoid`) |
 
 ## Enums
 
