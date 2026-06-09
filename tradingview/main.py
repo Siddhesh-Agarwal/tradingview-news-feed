@@ -11,28 +11,30 @@ class TradingViewNewsFeed:
     def __init__(
         self,
         *,
-        economic_category: Economics | None = None,
-        priority: FeedFormat | None = None,
+        economic_categories: list[Economics] | None = None,
+        priorities: list[FeedFormat] | None = None,
         symbol: str | None = None,
-        market: Market | None = None,
-        market_country: list[str] | None = None,
-        sector: MarketSector | None = None,
+        markets: list[Market] | None = None,
+        market_countries: list[str] | None = None,
+        sectors: list[MarketSector] | None = None,
     ):
         self.url = self._base_url
         self.url += "?filter=lang%3Aen"
-        if economic_category is not None:
-            self.url += "&filter=economic_category%3A" + economic_category.value
-        if market is not None:
-            self.url += "&filter=market%3A" + market.value
-        if priority is not None:
-            self.url += "&filter=priority%3A" + priority.value
+        if economic_categories is not None:
+            self.url += "&filter=economic_category%3A" + ",".join(
+                i.value for i in economic_categories
+            )
+        if markets is not None and len(markets) > 0:
+            self.url += "&filter=market%3A" + ",".join(i.value for i in markets)
+        if priorities is not None and len(priorities) > 0:
+            self.url += "&filter=priority%3A" + ",".join(i.value for i in priorities)
         if symbol is not None:
             # symbol is of the format exchange:ticker
             self.url += "&filter=symbol%3A" + quote(symbol)
-        if market_country is not None:
-            self.url += "&filter=market_country%3A" + ",".join(market_country)
-        if sector is not None:
-            self.url += "&filter=sector%3A" + quote(sector.value)
+        if market_countries is not None and len(market_countries) > 0:
+            self.url += "&filter=market_country%3A" + ",".join(market_countries)
+        if sectors is not None and len(sectors) > 0:
+            self.url += "&filter=sector%3A" + ",".join(quote(i.value) for i in sectors)
         self.url += "&client=screener"
         self.url += "&streaming=false"
         self.url += "&user_prostatus=non_pro"
