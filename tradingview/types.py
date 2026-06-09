@@ -87,7 +87,7 @@ class FeedItem(BaseModel):
     )
     provider: FeedItemProvider
 
-    @field_validator("storyPath", mode="before")
+    @field_validator("story_path", mode="before")
     @classmethod
     def make_full_url(cls, v: str | None) -> HttpUrl | None:
         if v is None:
