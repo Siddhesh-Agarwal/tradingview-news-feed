@@ -9,11 +9,13 @@ Python client for TradingView's news feed API. Wraps the
 
 ## Installation
 
+### PyPI
+
 ```bash
-uv add git+https://github.com:Siddhesh-Agarwal/tradingview-news-feed.git
+pip install tradingview-news-feed
 ```
 
-Or with pip:
+### GitHub
 
 ```bash
 pip install git+https://github.com:Siddhesh-Agarwal/tradingview-news-feed.git
