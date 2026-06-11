@@ -1,6 +1,6 @@
 [project]
 name = "tradingview-news-feed"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python client for TradingView's news feed API"
 license = "UNLICENSE"
 readme = "README.md"
