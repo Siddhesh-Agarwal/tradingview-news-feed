@@ -4,8 +4,6 @@ Python client for TradingView's news feed API.
 
 ## Installation
 
-## Installation
-
 ### PyPI
 
 ```bash
